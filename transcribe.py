@@ -5,13 +5,11 @@ monkey.patch_all()
 from gevent.pool import Pool
 from auditok import ADSFactory, AudioEnergyValidator, StreamTokenizer
 from auditok.io import BufferAudioSource
-from retrying import retry
 from types import IntType, StringType
 from contextlib import closing
 
 import wave
 import os
-import requests
 import json
 import gevent
 import time
@@ -24,13 +22,6 @@ from googleapiclient import discovery
 from oauth2client.client import GoogleCredentials
 
 SERVICE_URL = 'https://www.googleapis.com/auth/cloud-platform'
-
-
-def retry_main(exception):
-    if "Insufficient tokens" in exception:
-        print "WARNING: We are angering the google."
-        return False
-    return True
 
 
 class Google(object):
@@ -97,7 +88,6 @@ class Google(object):
             'b_leg': right,
         }
 
-    @retry(retry_on_exception=retry_main, stop_max_attempt_number=3, wait_random_min=1000, wait_random_max=2000)
     def upload_audio(self, speech, sample_rate):
         credentials = GoogleCredentials.get_application_default().create_scoped([SERVICE_URL])
 
@@ -125,7 +115,7 @@ class Google(object):
         try:
             r = self.upload_audio(raw_audio_data, kwargs['sample_rate'])
             raw_audio_data = ""
-        except requests.ConnectionError:
+        except Exception, e:
             return "%UPLOADFAILED"
 
         try:
