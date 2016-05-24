@@ -1,0 +1,47 @@
+# Temp files
+*~
+
+# Mac OSX
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# project files: # IntelliJ, PyCharm, AndroidStudio, Sublime Text
+*.sublime-project
+*.sublime-workspace
+.mr.developer.cfg
+.project
+.pydevproject
+.idea
+*.ipr
+*.iws
+
+# Google Credentials
+*.json
+
+# Python
+*.py[cod]
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+pip-log.txt
+*.so
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
