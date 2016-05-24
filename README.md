@@ -15,8 +15,6 @@ Operation:
 Requires:
   auditok
   gevent
-  requests
-  retrying
   oauth2client
   google-api-python-client
   googleapis-common-protos
