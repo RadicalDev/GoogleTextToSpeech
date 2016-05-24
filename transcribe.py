@@ -27,7 +27,9 @@ SERVICE_URL = 'https://www.googleapis.com/auth/cloud-platform'
 
 
 def retry_main(exception):
-    print "Connection error to google: ", exception
+    if "Insufficient tokens" in exception:
+        print "WARNING: We are angering the google."
+        return False
     return True
 
 
@@ -249,8 +251,8 @@ class Google(object):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-a', '--application-credentials-file', type=StringType, help="Path to API credentials file. Required")
-    parser.add_argument('-d', '--api-discovery-file', type=StringType, help="Path to API discovery file. Required")
+    parser.add_argument('-a', '--application-credentials-file', type=StringType, help="Path to API credentials file.")
+    parser.add_argument('-d', '--api-discovery-file', type=StringType, help="Path to API discovery file.")
     parser.add_argument('-f', '--file', type=StringType, help="Path to audio file. Required")
     parser.add_argument('-c', '--channels-to-process', default='AB', choices=['A', 'B', 'AB'], help="Channels to process: [A, B, AB]")
     parser.add_argument('-t', '--threads', type=IntType, default=1, help="Number of threads to use when processing segments in parallel.")
